@@ -17,7 +17,11 @@
             color: #333;
         }
 
-        /* Floating hearts background */
+        /* NEW: Locks scrolling on the early screens */
+        body.no-scroll {
+            overflow-y: hidden; 
+        }
+
         .heart-bg {
             position: fixed;
             bottom: -10px;
@@ -32,7 +36,6 @@
             100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
         }
 
-        /* Screens container */
         .screen {
             display: none;
             min-height: 100vh;
@@ -52,7 +55,6 @@
             to { opacity: 1; transform: translateY(0);}
         }
 
-        /* Typography */
         h1, .glow {
             font-family: 'Dancing Script', cursive;
             font-size: 3.5rem;
@@ -90,7 +92,6 @@
             margin: 20px 0;
         }
 
-        /* Buttons */
         .button-container {
             display: flex;
             gap: 20px;
@@ -113,7 +114,7 @@
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            touch-action: manipulation; /* Improves touch responsiveness */
+            touch-action: manipulation;
         }
 
         button:hover {
@@ -130,7 +131,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Photo Gallery - Polaroid Style */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -162,46 +162,23 @@
         .polaroid:nth-child(3n) { transform: rotate(-1deg); }
         .polaroid:hover { transform: scale(1.1) rotate(0deg); z-index: 20; position: relative; }
 
-        /* =========================================
-           MOBILE COMPATIBILITY (Phones & Tablets)
-           ========================================= */
         @media (max-width: 600px) {
-            h1, .glow {
-                font-size: 2.2rem; /* Smaller romantic text for phones */
-            }
-            .message-card {
-                width: 95%; /* Make the card wider on small screens */
-                padding: 15px;
-            }
-            .message {
-                font-size: 0.95rem; /* Slightly smaller text so it fits perfectly */
-            }
-            .highlight {
-                font-size: 1.6rem;
-            }
-            button {
-                padding: 12px 24px;
-                font-size: 1.1rem;
-            }
-            .gallery {
-                grid-template-columns: repeat(2, 1fr); /* Force 2 columns on mobile */
-                gap: 15px;
-                padding: 0 10px 50px 10px;
-            }
-            .polaroid {
-                padding: 8px 8px 25px 8px; /* Slightly smaller polaroid borders */
-            }
-            .polaroid img {
-                height: 120px;
-            }
+            h1, .glow { font-size: 2.2rem; }
+            .message-card { width: 95%; padding: 15px; }
+            .message { font-size: 0.95rem; }
+            .highlight { font-size: 1.6rem; }
+            button { padding: 12px 24px; font-size: 1.1rem; }
+            .gallery { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 10px 50px 10px; }
+            .polaroid { padding: 8px 8px 25px 8px; }
+            .polaroid img { height: 120px; }
         }
     </style>
 </head>
 
-<body>
+<body class="no-scroll">
 
 <audio id="bg-music" loop>
-    <source src="audio.mp3" type="audio/mpeg">
+    <source src="song.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
 </audio>
 
@@ -248,7 +225,6 @@
 </div>
 
 <script>
-// Floating hearts generation
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart-bg");
@@ -261,35 +237,31 @@ function createHeart() {
 }
 setInterval(createHeart, 300);
 
-// Screen Navigation & Music Logic
 const music = document.getElementById("bg-music");
 const screen0 = document.getElementById("screen0");
 const screen1 = document.getElementById("screen1");
 const screen2 = document.getElementById("screen2");
 const screen3 = document.getElementById("screen3");
 
-// Start button (Plays music and moves to Screen 1)
 document.getElementById("start-btn").onclick = () => {
     music.play().catch(e => console.log("Audio play failed:", e)); 
     screen0.classList.remove("active");
     screen1.classList.add("active");
+    window.scrollTo(0, 0); // Forces the page to the top
 
-    // Auto-transition from Screen 1 to Screen 2 after 4 seconds
     setTimeout(() => {
         screen1.classList.remove("active");
         screen2.classList.add("active");
+        window.scrollTo(0, 0); // Forces the page to the top again
     }, 4000);
 };
 
-// NO button escape trick (Mobile Friendly)
 const noBtn = document.getElementById("no");
 
 function moveNo(e) {
-    if(e) e.preventDefault(); // Prevents accidental clicking while trying to touch
-    
+    if(e) e.preventDefault(); 
     noBtn.style.position = "fixed";
     
-    // Safely calculate bounds so it never flies off the edge of a phone screen
     const safePadding = 20;
     const maxX = window.innerWidth - noBtn.clientWidth - safePadding;
     const maxY = window.innerHeight - noBtn.clientHeight - safePadding;
@@ -301,14 +273,16 @@ function moveNo(e) {
     noBtn.style.top = randomY + "px";
 }
 
-// Works for both computer mice and phone touch screens
 noBtn.addEventListener("mouseover", moveNo);
 noBtn.addEventListener("touchstart", moveNo, {passive: false});
 
-// YES button click
 document.getElementById("yes").onclick = () => {
     screen2.classList.remove("active");
     screen3.classList.add("active");
+    
+    // UNLOCK SCROLLING FOR THE PHOTOS!
+    document.body.classList.remove("no-scroll"); 
+    window.scrollTo(0, 0); 
 };
 </script>
 
