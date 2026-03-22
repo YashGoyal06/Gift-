@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For PRASHANT 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+            color: #333;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: fixed;
+            bottom: -10px;
+            color: rgba(255, 77, 136, 0.6);
+            animation: floatUp linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Screens container */
+        .screen {
+            display: none;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            animation: fadeIn 1.2s ease;
+            position: relative;
+            z-index: 10;
+            box-sizing: border-box;
+        }
+        .active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Typography */
+        h1, .glow {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #ff1493;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .message-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(255, 105, 180, 0.2);
+            margin-bottom: 15px;
+            width: 80%;
+            max-width: 600px;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-sizing: border-box;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 10px 0;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .highlight {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #d10056;
+            margin: 20px 0;
+        }
+
+        /* Buttons */
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            height: 80px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            touch-action: manipulation; /* Improves touch responsiveness */
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        #start-btn { background: #ff4d6d; color: white; margin-top: 20px; animation: beat 1.5s infinite; }
+        #yes { background: #ff4d6d; color: white; z-index: 2; position: relative; }
+        #no { background: #888; color: white; z-index: 100; position: absolute; right: 0; transition: left 0.3s ease, top 0.3s ease; }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Photo Gallery - Polaroid Style */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            width: 100%;
+            max-width: 600px;
+            padding-bottom: 50px;
+            box-sizing: border-box;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 10px 10px 35px 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            border-radius: 2px;
+            transition: transform 0.3s;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            background-color: #ffe6ea;
+        }
+
+        .polaroid:nth-child(odd) { transform: rotate(-3deg); }
+        .polaroid:nth-child(even) { transform: rotate(4deg); }
+        .polaroid:nth-child(3n) { transform: rotate(-1deg); }
+        .polaroid:hover { transform: scale(1.1) rotate(0deg); z-index: 20; position: relative; }
+
+        /* =========================================
+           MOBILE COMPATIBILITY (Phones & Tablets)
+           ========================================= */
+        @media (max-width: 600px) {
+            h1, .glow {
+                font-size: 2.2rem; /* Smaller romantic text for phones */
+            }
+            .message-card {
+                width: 95%; /* Make the card wider on small screens */
+                padding: 15px;
+            }
+            .message {
+                font-size: 0.95rem; /* Slightly smaller text so it fits perfectly */
+            }
+            .highlight {
+                font-size: 1.6rem;
+            }
+            button {
+                padding: 12px 24px;
+                font-size: 1.1rem;
+            }
+            .gallery {
+                grid-template-columns: repeat(2, 1fr); /* Force 2 columns on mobile */
+                gap: 15px;
+                padding: 0 10px 50px 10px;
+            }
+            .polaroid {
+                padding: 8px 8px 25px 8px; /* Slightly smaller polaroid borders */
+            }
+            .polaroid img {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<audio id="bg-music" loop>
+    <source src="audio.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<div class="screen active" id="screen0">
+    <div class="glow">A Special Surprise For You...</div>
+    <button id="start-btn">Tap to Open 💌</button>
+</div>
+
+<div class="screen" id="screen1">
+    <div class="glow">WANTED TO SHOW MY LOVE TOWARDS YOU 💖</div>
+    <div class="message-card">
+        <div class="message">THOUGH I DON’T KNOW CODING...</div>
+    </div>
+</div>
+
+<div class="screen" id="screen2">
+    <h1>PRASHANT, DO YOU LOVE ME? 💖</h1>
+    <div class="button-container">
+        <button id="yes">YES 💖</button>
+        <button id="no">NO 😢</button>
+    </div>
+</div>
+
+<div class="screen" id="screen3">
+    <h1 style="animation: beat 1s infinite;">I KNEW YOU LOVE ME 💃💖</h1>
+
+    <div class="message-card">
+        <div class="message">No matter whatever it takes, I will stay with you till your last breath.</div>
+        <div class="message">I don’t always say things perfectly… but every feeling I have for you is real.</div>
+        <div class="message">You are not just someone I love… you are someone I feel safe with.</div>
+        <div class="message">Even on the days when things feel confusing, my heart still chooses you… quietly, but surely.</div>
+        <div class="message">🏡 I don’t just see a future with you… I see a home in you.</div>
+        <div class="highlight">PRASHANT, YOU ARE MY HOME ❤️</div>
+    </div>
+
+    <h2 class="highlight" style="font-size: 1.8rem; margin-top: 20px;">Our Beautiful Moments 📸</h2>
+    <div class="gallery">
+        <div class="polaroid"><img src="1.jpeg" alt="Us"></div>
+        <div class="polaroid"><img src="2.jpeg" alt="Us"></div>
+        <div class="polaroid"><img src="3.jpeg" alt="Us"></div>
+        <div class="polaroid"><img src="4.jpeg" alt="Us"></div>
+        <div class="polaroid"><img src="5.jpeg" alt="Us"></div>
+    </div>
+</div>
+
+<script>
+// Floating hearts generation
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart-bg");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 15 + 10 + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+}
+setInterval(createHeart, 300);
+
+// Screen Navigation & Music Logic
+const music = document.getElementById("bg-music");
+const screen0 = document.getElementById("screen0");
+const screen1 = document.getElementById("screen1");
+const screen2 = document.getElementById("screen2");
+const screen3 = document.getElementById("screen3");
+
+// Start button (Plays music and moves to Screen 1)
+document.getElementById("start-btn").onclick = () => {
+    music.play().catch(e => console.log("Audio play failed:", e)); 
+    screen0.classList.remove("active");
+    screen1.classList.add("active");
+
+    // Auto-transition from Screen 1 to Screen 2 after 4 seconds
+    setTimeout(() => {
+        screen1.classList.remove("active");
+        screen2.classList.add("active");
+    }, 4000);
+};
+
+// NO button escape trick (Mobile Friendly)
+const noBtn = document.getElementById("no");
+
+function moveNo(e) {
+    if(e) e.preventDefault(); // Prevents accidental clicking while trying to touch
+    
+    noBtn.style.position = "fixed";
+    
+    // Safely calculate bounds so it never flies off the edge of a phone screen
+    const safePadding = 20;
+    const maxX = window.innerWidth - noBtn.clientWidth - safePadding;
+    const maxY = window.innerHeight - noBtn.clientHeight - safePadding;
+    
+    const randomX = Math.max(safePadding, Math.random() * maxX);
+    const randomY = Math.max(safePadding, Math.random() * maxY);
+    
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+}
+
+// Works for both computer mice and phone touch screens
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo, {passive: false});
+
+// YES button click
+document.getElementById("yes").onclick = () => {
+    screen2.classList.remove("active");
+    screen3.classList.add("active");
+};
+</script>
+
+</body>
+</html>
